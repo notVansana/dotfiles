@@ -4,7 +4,7 @@ case $- in
     *) return;;
 esac
 
-export EDITOR=vim
+export EDITOR=nvim
 
 # Path to your oh-my-bash installation.
 export OSH='/home/jack/.oh-my-bash'
@@ -145,136 +145,19 @@ source "$OSH"/oh-my-bash.sh
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
 
-# Function to search subcommands or options
-search_sub() {
-    local cmd="$1"
-
-    # Check if the command is provided
-    if [[ -z "$cmd" ]]; then
-        echo "Usage: search-sub <command>"
-        return 1
-    fi
-
-    # Check if the command exists
-    if ! command -v "$cmd" &>/dev/null; then
-        echo "Error: Command '$cmd' not found."
-        return 1
-    fi
-
-    # Use compgen to get completions for the command
-    local completions
-    completions=$(compgen -A command "${cmd}" | grep "^${cmd}")
-
-    # Check if completions were found
-    if [[ -z "$completions" ]]; then
-        echo "No subcommands found for '$cmd'."
-        return 1
-    fi
-
-    # List subcommands
-    echo "Subcommands for '$cmd':"
-    echo "$completions"
-}
-
-red_text() {
-    echo -e "\033[31m$1\033[0m"
-}
-
-alias run-launcher="sudo python3 ~/Documents/just-another-launcher/main.py"
-alias run-awserver="sudo aw-server"
-alias search-sub=search_sub
-alias red_text=red_text
-alias ask="bash ~/Documents/StartupScripts/ask.sh"
-
-z-l() {
-    z "$1" && ls -d */ && z -
-}
-
-z-t() {
-    z "$1" && tree -L 1 && z -
-}
-
-alias zz='zoxide'
-alias zq='zoxide query'
-alias zb='zoxide add'
 alias zl=z-l
 alias zt=z-t
 alias rmt='trash'
-alias acp='scripts/push_operation.sh'
 
-# Created by `pipx` on 2024-12-12 03:12:53
 export PATH="$PATH:/home/jack/.local/bin"
 
 eval "$(zoxide init bash)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 . "$HOME/.cargo/env"
 
-# echo 0 | sudo sysctl -w kernel.perf_event_paranoid=0
-
 export PATH=$PATH:$HOME/google-cloud-sdk/bin
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 export DOCKER_HOST=unix:///var/run/docker.sock
 export EDITOR="nvim"
 
-alias obsidian='obsidian && ~/Documents/Scripts/scripts_obsidian.sh'
-
 source /home/jack/.config/broot/launcher/bash/br
-
-cppBenchmark() {
-    local cppFilePath=$(realpath $1)
-
-    # Check to see if the path exists, terminate if not found
-    if [[ ! -f $cppFilePath ]]; then
-        echo "The path that you provided cannot be found."
-        return 1
-    fi
-
-    local cppBaseName
-    cppBaseName=$(basename "$cppFilePath" .cpp)
-
-    g++ -O2 \
-        -I/usr/include/benchmark/include \
-        $cppFilePath \
-        -L/usr/include/benchmark/build/src \
-        -lbenchmark -lpthread \
-        -o ${cppBaseName}.exe \
-    || return 1
-
-    # Execute the executable produced
-    "./${cppBaseName}.exe"
-}
-
-pyBenchmark() {
-    local pyFilePath=$(realpath $1)
-
-    if [[ ! -r $pyFilePath ]]; then
-        echo "The path to the file cannot be found."
-        return 1
-    fi
-
-    kernprof -l -v $pyFilePath
-}
-
-pyFlameGraph() {
-    local pyFilePath=$(realpath $1)
-
-    if [[ ! -r $pyFilePath ]]; then
-        echo "The path to the file cannot be found."
-        return 1
-    fi
-    
-    py-spy record   --output astar.flame.svg   --format flamegraph   -- python $pyFilePath
-}
-
-datamash() {
-    # Compute 10th, 50th, 90th percentiles, plus mean, min, max, sum:
-    datamash p 10 p 50 p 90 mean min max sum < times.txt
-}
-
-# alias hyperfine=hyperfine -w 3 -r 20 "perf stat -e instructions -- python3 test.py"
-
-# in your shell (or at top of your script):
-# export TIMEFORMAT='%3U user, %3S sys, %10.9R real'
-export TIMEFORMAT='%9lR'
-
-alias jira=~/OneDrive/Documents/Scripts/open_jira.sh
