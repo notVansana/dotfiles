@@ -1,0 +1,48 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "vim_mode": false,
+  "editor.auto-save": true,
+  "autosave": { "after_delay": { "milliseconds": 500 } },
+
+  "show_call_status_icon": false,
+
+  "show_edit_predictions": false,
+  "languages": {
+    "YAML": {
+      "show_edit_predictions": false
+    },
+    "Java": {
+      "show_edit_predictions": false
+    },
+    "Python": {
+      "show_edit_predictions": false
+    }
+  },
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "assistant": {
+    "default_model": {
+      "provider": "ollama",
+      "model": "llama3.1:8b"
+    },
+    "version": "2"
+  },
+  "ui_font_size": 16,
+  "buffer_font_size": 18.0,
+  "theme": {
+    "mode": "system",
+    "light": "Solarized Light",
+    "dark": "One Dark"
+  }
+}
