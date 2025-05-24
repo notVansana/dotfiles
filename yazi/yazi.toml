@@ -1,1 +1,12 @@
 show_hidden = true
+image_alloc=0
+
+[manager]
+ratio = [2, 4, 3]
+
+[preview]
+image_backend = "ueberzugpp"
+
+[[plugin.prepend_previewers]]
+mime = "image/*"
+exec = "noop"
