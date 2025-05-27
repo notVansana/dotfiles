@@ -1,3 +1,5 @@
+set -o vi
+
 # Enable the subsequent settings only in interactive sessions
 case $- in
   *i*) ;;
@@ -159,5 +161,4 @@ export PATH=$PATH:$HOME/google-cloud-sdk/bin
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 export DOCKER_HOST=unix:///var/run/docker.sock
 export EDITOR="nvim"
-
-source /home/jack/.config/broot/launcher/bash/br
+export TERMINAL=kitty
